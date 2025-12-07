@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   
+    <h2>Legg til ansatt</h2>
+    <form>
+    <label><br>
+        Fornavn 
+        <input type="text" value="" name="firstname" id="firstname"></br>
+    </label>
+    <label><br>
+        Etternavn
+        <input type="text" value="" name="lastname" id="lastname"></br>
+    </label>
+    <label><br>
+        E-post
+        <input type="email" value="" name="epost" id="epost"></br>
+    </label>
+    <label><br>
+        Kontor
+        <input type="text" value="" name="office" id="office"></br>
+    </label>
+    <label><br>Stilling</label>
+         <select name="role" id="role">
+        <option value="">Velg stilling</option>
+        <option value="Professor">Professor</option>
+        <option value="Dekan">Dekan</option>
+        <option value="Rektor">Rektor</option>
+        <option value="Vaktmester">Vaktmester</option>
+        <option value="Lektor">Lektor</option>
+
+    </select></br>
+    <label><br>
+        <input type="text" value="" name="course" id="course"></br>
+
+    </label>
+    </form>
+    <button id="nyansatt">Legg til ansatt</button>
+     <div id="allemployees"></div>
+     <div id="allecourses"></div>
+   <script src="../oppgave1/register.js"></script>
+    <script src="../oppgave1/actions.js"></script> 
+</body>
+</html>

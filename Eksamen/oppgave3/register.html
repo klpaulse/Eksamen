@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <button type="button" onClick="renderAllEmployees()">Vis alle ansatte</button>
+    <button type="button" onClick="renderUndervisere()">Vis undervisere</button>
+    <button type="button" onClick="renderAdministrasjon()">Vis administrasjon</button>
+
+    <p>Vis kun stilling: 
+       <button type="button" onClick="renderEmployeesByPosition(`professor`)">Professor</button>
+       <button type="button" onClick="renderEmployeesByPosition(`dekaner`)">Dekan</button>
+       <button type="button" onClick="renderEmployeesByPosition(`Rektor`)">Rektor</button>
+       <button type="button" onClick="renderEmployeesByPosition(`vaktmester`)">Vaktmester</button>
+       <button type="button" onClick="renderEmployeesByPosition(`lektor`)">Lektor</button>
+    </p>
+    
+
+
+
+
+
+
+<div id="allemployees"></div>
+<div id="allecourses"></div>
+     
+    
+    <script src="../oppgave1/register.js"></script>
+    <script src="../oppgave1/actions.js"></script>
+</body>
+</html>
+
+
