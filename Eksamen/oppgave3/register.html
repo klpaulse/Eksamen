@@ -3,21 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" typ="text/css" href="css/style.css">
     <title>Document</title>
 </head>
 <body>
+ <div= id="page-container">
+
+    <header>
+        <h1>Høgskolen JS</h1>
+    </header>
+    <main>
+        <section >
+                <ul>
+   <li> <button class="knapp" type="button" onClick="renderAllEmployees()">Vis alle ansatte</button></li>
+    <li><button class="knapp" type="button" onClick="renderUndervisere()">Vis undervisere</button></li>
+    <li><button class="knapp" type="button" onClick="renderAdministrasjon()">Vis administrasjon</button></li>
+    </ul>
+</section>
+<section class="stilling">
+    <p>Vis kun stilling:  </p>
+    <ul>
+       <li><button class="knapp" type="button" onClick="renderEmployeesByPosition(`professor`)">Professor</button></li>
+       <li><button  class="knapp" type="button" onClick="renderEmployeesByPosition(`dekan`)">Dekan</button></li>
+       <li><button class="knapp" type="button" onClick="renderEmployeesByPosition(`Rektor`)">Rektor</button></li>
+       <li><button  class="knapp" type="button" onClick="renderEmployeesByPosition(`vaktmester`)">Vaktmester</button></li>
+       <li><button class="knapp" type="button" onClick="renderEmployeesByPosition(`lektor`)">Lektor</button></li>
     
-    <button type="button" onClick="renderAllEmployees()">Vis alle ansatte</button>
-    <button type="button" onClick="renderUndervisere()">Vis undervisere</button>
-    <button type="button" onClick="renderAdministrasjon()">Vis administrasjon</button>
+    </ul>
+    </section>
 
-    <p>Vis kun stilling: 
-       <button type="button" onClick="renderEmployeesByPosition(`professor`)">Professor</button>
-       <button type="button" onClick="renderEmployeesByPosition(`dekaner`)">Dekan</button>
-       <button type="button" onClick="renderEmployeesByPosition(`Rektor`)">Rektor</button>
-       <button type="button" onClick="renderEmployeesByPosition(`vaktmester`)">Vaktmester</button>
-       <button type="button" onClick="renderEmployeesByPosition(`lektor`)">Lektor</button>
-    </p>
+    
+    <section>
+        <h2>Ansatte</h2>
+        
+    <div id="allemployees"></div>
+
+</section>
+    </main>
+
+    <footer>
+        <h3>Kursoversikt</h3>
+    <div id="allecourses"></div>
+    </footer>
+    
+    
     
 
 
@@ -25,12 +54,13 @@
 
 
 
-<div id="allemployees"></div>
-<div id="allecourses"></div>
+
      
+
     
     <script src="../oppgave1/register.js"></script>
     <script src="../oppgave1/actions.js"></script>
+    </div>
 </body>
 </html>
 

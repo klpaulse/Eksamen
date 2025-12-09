@@ -11,6 +11,7 @@ const employees =  [
         office: "B307",
         email: "ingrid.solberg@hiof.no",
         courses: "ingen kursansvar"
+        
     }
     ,
     {
@@ -83,7 +84,7 @@ const employees =  [
         position: position[3] ,
         office: "A223",
         email: "amalie.kristoffersen@hiof.no",
-        courses: ["Frondend-utvikling, CSS og design"]
+        courses: ["Frondend-utvikling", "CSS og design"]
     }
     ,
     {
@@ -137,7 +138,7 @@ const employees =  [
         position: position[4] ,
         office: "D503",
         email: "victoria.asheim@hiof.no",
-        courses: ["Programmering 1, webutvikling"]
+        courses: ["Programmering 1", "webutvikling"]
     }
     ,
     {
@@ -146,7 +147,7 @@ const employees =  [
         position: position[4] ,
         office: "C127",
         email: "oliver.stensrud@hiof.no ",
-        courses: ["Kunstig intelligens, maskinlæring"]
+        courses: ["Kunstig intelligens", "maskinlæring"]
     }
     ,
     {
@@ -173,7 +174,7 @@ const employees =  [
         position: position[4] ,
         office: "D311",
         email: "ida.bjørnstad@hiof.no",
-        courses: ["Operativsystemer",]
+        courses: ["Operativsystemer"]
     }
     ,
     {
@@ -182,7 +183,7 @@ const employees =  [
         position: position[4] ,
         office: "C208",
         email: "mats.lie@hiof.no",
-        courses: ["Webdesign, responsiv utvikling"]
+        courses: ["Webdesign", "responsiv utvikling"]
     }
     ,
      {

@@ -1,0 +1,149 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #9ac1f8;
+    font-family: "arial"; 
+    
+}
+
+#page-container{
+    display: grid;
+    grid-template-areas: "header" 
+                         "main"
+                         "footer";
+
+}
+
+header{
+    grid-area: header; 
+    background-color: #4521f9;
+}
+
+header h1{
+    font-size: 30px; 
+    color: #fff;
+    display:flex; 
+    align-content: center; 
+    justify-content: center; 
+    padding: 1rem; 
+
+
+}
+
+section ul{
+    display:flex;
+    flex-direction: row; 
+    list-style:none; 
+    align-items: center; 
+    column-gap:1rem; 
+    padding: 0; 
+
+
+}
+
+
+
+.knapp{
+    padding: 0.75rem; 
+    border-radius: 5px;
+    border: 1px solid #a5a2a2;
+    background-color: #8993fd ; 
+    
+    
+}
+
+.stilling{
+    display: flex;
+    align-items: center; 
+     
+ul{
+    padding: 0.5rem;
+}
+}
+
+section{
+    padding: 0; 
+}
+main, footer{
+    grid-area: main; 
+    max-width: 1300px;
+    width: 100%;
+    margin: 0 auto; 
+
+
+
+    
+}
+
+#allemployees{
+    display: grid; 
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto; 
+    row-gap: 1rem;
+    column-gap: 1rem; 
+    justify-content: center; 
+    
+   
+
+    
+}
+
+.employee-card{
+    background-color: #fff;
+    border: 1px solid #a5a2a2;
+   border-radius: 5px; 
+   padding: 1rem; 
+   line-height: 1.5; 
+
+
+
+}
+
+.kursiv{
+    font-style:italic; 
+}
+
+footer{
+    grid-area: footer; 
+    margin-top: 1rem;
+    
+    h3{
+        font-weight: 700; 
+        font-size: 20px; 
+    }
+    
+}
+
+#allecourses ul{
+    display: flex;
+    flex-direction: column; 
+    line-height: 2; 
+
+}
+
+form .input {
+  display: flex;
+  align-items: center;
+
+}
+
+
+form label {
+  width: 100px;  
+  
+}
+
+form input {
+width:120px;
+height: 25px; 
+}
+
+form select{
+    height: 25px; 
+}
+
+
+
+

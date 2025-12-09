@@ -6,11 +6,9 @@ function getEmployeeHTML(index) {
     const emp = employees[index];
 
     let coursesHTML = "";
-    // Sjekk stilling: Rektor, Dekan, Vaktmester
     if (["rektor", "dekan", "vaktmester"].includes(emp.position.toLowerCase())) {
-        coursesHTML = `<p>ingen kursansvar</p>`;
+        coursesHTML = `<p class="kursiv">Ingen kursansvar</p>`;
     } else {
-        // Undervisere: professor og lektor
         if (Array.isArray(emp.courses)) {
             coursesHTML = `<p><strong>Kursansvar:</strong> ${emp.courses.join(", ")}</p>`;
         } else {
@@ -18,16 +16,27 @@ function getEmployeeHTML(index) {
         }
     }
 
-    return `
+    // Bygg kortet
+    let cardHTML = `
         <div class="employee-card">
             <h2>${emp.firstname} ${emp.lastname}</h2>
             <p><strong>Stilling:</strong> ${emp.position}</p>
             <p><strong>Kontor:</strong> ${emp.office}</p>
             <p><strong>E-post:</strong> <a href="mailto:${emp.email}">${emp.email}</a></p>
             <div>${coursesHTML}</div>
-        </div>
     `;
+
+    // Legg til slett-knapp hvis vi er på admin-siden
+    if (window.location.pathname.includes("admin.html")) {
+        cardHTML += `<button class="knapp" onclick="deleteEmployee(${index})">Slett ansatt</button>`;
+    }
+
+    cardHTML += `</div>`;
+    return cardHTML;
 }
+
+            
+
    
 
 // Funksjon som skriver ut ALLE ansatte
@@ -62,24 +71,7 @@ function renderAllEmployees() {
     document.getElementById("allemployees").innerHTML = employeesHTML;
 }
 
-function getAllCourses() {
-    let allCourses = [];
 
-    employees.forEach(emp => {
-        if (Array.isArray(emp.courses)) {
-            allCourses.push(...emp.courses);
-        } else if (typeof emp.courses === "string" && emp.courses.toLowerCase() !== "ingen kursansvar") {
-            allCourses.push(emp.courses);
-        }
-    });
-
-    // Fjern duplikater og sorter alfabetisk
-    let uniqueCourses = [...new Set(allCourses)].sort();
-
-    // Returner som HTML-liste
-    return `<ul>` + uniqueCourses.map(course => `<li>${course}</li>`).join("") + `</ul>`;
-}
-document.getElementById("allecourses").innerHTML = getAllCourses();
 
 // Funksjon som viser alle undervisere (professor + lektor)
 function renderUndervisere() {
@@ -95,11 +87,29 @@ function renderUndervisere() {
     document.getElementById("allemployees").innerHTML = employeesHTML;
 }
 
+
+function getAllCourses() {
+    let allCourses = [];
+    employees.forEach(emp => {
+        if (Array.isArray(emp.courses)) {
+            allCourses.push(...emp.courses);
+        } else if (typeof emp.courses === "string" && emp.courses.toLowerCase() !== "ingen kursansvar") {
+            allCourses.push(emp.courses);
+        }
+    });
+    // Fjern duplikater og sorter alfabetisk
+    let uniqueCourses = [...new Set(allCourses)].sort();
+    // Returner som HTML-liste
+    return `<ul>` + uniqueCourses.map(course => `<li>${course}</li>`).join("") + `</ul>`;
+}
+document.getElementById("allecourses").innerHTML = getAllCourses();
+
+
 // Funksjon som viser administrasjonen (rektor, dekaner, vaktmester)
 function renderAdministrasjon() {
     const administrasjon = employees.filter(emp => 
         emp.position.toLowerCase() === "rektor" || 
-        emp.position.toLowerCase() === "dekaner" || 
+        emp.position.toLowerCase() === "dekan" || 
         emp.position.toLowerCase() === "vaktmester"
     );
 
@@ -112,61 +122,61 @@ function renderAdministrasjon() {
 }
 
 // Legg til ny ansatt uavhengig av stilling
-function addEmployee(firstname, lastname, position, office, email, courses) {
+function addEmployee() {
     let coursesValue;
+    const printFname = document.getElementById("firstname").value;
+    const printLname = document.getElementById("lastname").value;
+    const printEpost = document.getElementById("epost").value;
+    const printOffice = document.getElementById("office").value;
+    const printStilling = document.getElementById("role").value;
+    const printCourse = document.getElementById("course").value;
 
     // Hvis stillingen er Rektor, Dekan eller Vaktmester → ingen kursansvar
-    if (["Rektor", "Dekan", "Vaktmester"].includes(position)) {
+    if (["Rektor", "Dekan", "Vaktmester"].includes(printStilling)) {
         coursesValue = "ingen kursansvar";
     } else {
-        // Sørg for at kurs alltid lagres som array
-        coursesValue = Array.isArray(courses) ? courses : [courses];
+        coursesValue = [printCourse]; // lagres som array
     }
 
-    // Opprett nytt objekt med samme struktur som employees-arrayen
     const newEmployee = {
-        firstname: firstname,
-        lastname: lastname,
-        position: position,
-        office: office,
-        email: email,
+        firstname: printFname,
+        lastname: printLname,
+        position: printStilling,
+        office: printOffice,
+        email: printEpost,
         courses: coursesValue
     };
 
-    // Legg til i registeret
     employees.push(newEmployee);
 
-    // Bekreftelse i konsollen
-    console.log(`${firstname} ${lastname} er lagt til som ${position}.`);
+    const index = employees.length - 1;
+    userList.innerHTML += getEmployeeHTML(index);
 }
 
-function deleteEmployee(identifier) {
-    // Finn indeksen til den ansatte basert på navn eller e-post
-    const index = employees.findIndex(emp => 
-        emp.name.toLowerCase() === identifier.toLowerCase() ||
-        emp.email.toLowerCase() === identifier.toLowerCase()
-    );
-
-    if (index !== -1) {
-        // Fjern den ansatte fra arrayen
-        const removed = employees.splice(index, 1)[0];
-        console.log(`${removed.name} er slettet fra registeret.`);
-        return true;
-    } else {
-        console.log(`Fant ingen ansatt med identifikator: ${identifier}`);
-        return false;
+function deleteEmployee(index) {
+    if (index < 0 || index >= employees.length) {
+        console.error("Ugyldig indeks:", index);
+        return;
     }
+
+    // Fjern ansatt fra arrayen
+    employees.splice(index, 1);
+
+    // Oppdater visningen
+    renderAllEmployees();
+
+    // Oppdater kurslisten også (hvis du vil at den skal oppdatere automatisk)
+    document.getElementById("allecourses").innerHTML = getAllCourses();
 }
+
+
 
 const btn = document.getElementById("nyansatt")
-let userRegister = []
-btn.addEventListener("click", printEmployee)
+const userList = document.getElementById("allemployees")
 
-function printEmployee (){
-    const printFname = document.getElementById("firstname").value
-    const printLname = document.getElementById("lastname").value
-    const printepost = document.getElementById("epost").value
-    const printOffice = document.getElementById("office").value
-    const printStilling = document.getElementById("role").value
+btn.addEventListener("click", addEmployee)
 
-}
+
+  
+
+
