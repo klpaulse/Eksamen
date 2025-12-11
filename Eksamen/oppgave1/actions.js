@@ -1,10 +1,10 @@
+
 function getEmployeeHTML(index) {
     if (index < 0 || index >= employees.length) {
         return `<p>Ingen ansatt funnet på indeks ${index}</p>`;
     }
 
     const emp = employees[index];
-
     let coursesHTML = "";
     if (["rektor", "dekan", "vaktmester"].includes(emp.position.toLowerCase())) {
         coursesHTML = `<p class="kursiv">Ingen kursansvar</p>`;
@@ -26,6 +26,8 @@ function getEmployeeHTML(index) {
             <div>${coursesHTML}</div>
     `;
 
+
+
     // Legg til slett-knapp hvis vi er på admin-siden
     if (window.location.pathname.includes("admin.html")) {
         cardHTML += `<button class="knapp" onclick="deleteEmployee(${index})">Slett ansatt</button>`;
@@ -33,8 +35,8 @@ function getEmployeeHTML(index) {
 
     cardHTML += `</div>`;
     return cardHTML;
-}
 
+}
             
 
    
@@ -121,36 +123,35 @@ function renderAdministrasjon() {
     document.getElementById("allemployees").innerHTML = employeesHTML;
 }
 
-// Legg til ny ansatt uavhengig av stilling
-function addEmployee() {
+function addEmployee(firstname, lastname, position, office, email, courses) {
     let coursesValue;
-    const printFname = document.getElementById("firstname").value;
-    const printLname = document.getElementById("lastname").value;
-    const printEpost = document.getElementById("epost").value;
-    const printOffice = document.getElementById("office").value;
-    const printStilling = document.getElementById("role").value;
-    const printCourse = document.getElementById("course").value;
-
+    const printFname = document.getElementById("firstname").value
+    const printLname = document.getElementById("lastname").value
+    const printEpost = document.getElementById("epost").value
+    const printOffice = document.getElementById("office").value
+    const printStilling = document.getElementById("role").value
     // Hvis stillingen er Rektor, Dekan eller Vaktmester → ingen kursansvar
-    if (["Rektor", "Dekan", "Vaktmester"].includes(printStilling)) {
+    if (["Rektor", "Dekan", "Vaktmester"].includes(position)) {
         coursesValue = "ingen kursansvar";
     } else {
-        coursesValue = [printCourse]; // lagres som array
+        // Sørg for at kurs alltid lagres som array
+        coursesValue = Array.isArray(courses) ? courses : [courses];
     }
-
+    // Opprett nytt objekt med samme struktur som employees-arrayen
     const newEmployee = {
-        firstname: printFname,
-        lastname: printLname,
-        position: printStilling,
-        office: printOffice,
-        email: printEpost,
+        firstname: printFname, //firstname,
+        lastname: printLname, //lastname,
+        position: printStilling, //position,
+        office: printOffice,//office,
+        email: printEpost, //email,
         courses: coursesValue
     };
-
+    // Legg til i registeret
     employees.push(newEmployee);
-
-    const index = employees.length - 1;
-    userList.innerHTML += getEmployeeHTML(index);
+    // Bekreftelse i konsollen
+   // console.log(`${firstname} ${lastname} er lagt til som ${position}.`);
+   const index = employees.length-1
+   userList.innerHTML += getEmployeeHTML(index)
 }
 
 function deleteEmployee(index) {
@@ -175,8 +176,4 @@ const btn = document.getElementById("nyansatt")
 const userList = document.getElementById("allemployees")
 
 btn.addEventListener("click", addEmployee)
-
-
-  
-
 
