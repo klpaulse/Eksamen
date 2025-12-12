@@ -7,7 +7,9 @@ function getEmployeeHTML(index) {
     const emp = employees[index];
     let coursesHTML = "";
     if (["rektor", "dekan", "vaktmester"].includes(emp.position.toLowerCase())) {
-        coursesHTML = `<p class="kursiv">Ingen kursansvar</p>`;
+        coursesHTML = `<p class="kursiv">Ingen kursansvar</p>`;// #OPPD3
+        //Lagt til  class="kursiv" slik at det er mulig å gjøre teksten "Ingen kursansvar" kursiv. 
+        
     } else {
         if (Array.isArray(emp.courses)) {
             coursesHTML = `<p><strong>Kursansvar:</strong> ${emp.courses.join(", ")}</p>`;
@@ -28,7 +30,7 @@ function getEmployeeHTML(index) {
 
 
 
-    // Legg til slett-knapp hvis vi er på admin-siden
+    //#OPPD3 lagt til en betingelse som gjør det mulig å ha slett ansatt knapp kun i admin.html. 
     if (window.location.pathname.includes("admin.html")) {
         cardHTML += `<button class="knapp" onclick="deleteEmployee(${index})">Slett ansatt</button>`;
     }
@@ -39,35 +41,33 @@ function getEmployeeHTML(index) {
 }
             
 
-   
 
-// Funksjon som skriver ut ALLE ansatte
 function renderAllEmployees() {
-    // Bruker getEmployeeHTML for hver ansatt
+
     let employeesHTML = employees.map((emp, index) => getEmployeeHTML(index)).join("");
 
-    // Setter inn i containeren med id "allemployees"
+  
     document.getElementById("allemployees").innerHTML = employeesHTML;
 }
 renderAllEmployees();
 
-// Funksjon som viser alle ansatte med gitt stilling
+
 function renderEmployeesByPosition(position) {
-    // Filtrer ansatte basert på stilling
+    
     const filtered = employees.filter(emp => emp.position.toLowerCase() === position.toLowerCase());
 
-    // Bygg HTML med getEmployeeHTML
+    
     let employeesHTML = filtered.map((emp, index) => {
-        // Vi må finne indeksen til emp i original-arrayen
+       
         const originalIndex = employees.indexOf(emp);
         return getEmployeeHTML(originalIndex);
     }).join("");
 
-    // Sett inn i containeren
+    
     document.getElementById("allemployees").innerHTML = employeesHTML;
 }
 
-// Funksjon som viser alle ansatte
+
 function renderAllEmployees() {
     let employeesHTML = employees.map((emp, index) => getEmployeeHTML(index)).join("");
     document.getElementById("allemployees").innerHTML = employeesHTML;
@@ -75,7 +75,7 @@ function renderAllEmployees() {
 
 
 
-// Funksjon som viser alle undervisere (professor + lektor)
+
 function renderUndervisere() {
     const undervisere = employees.filter(emp => 
         emp.position.toLowerCase() === "professor" || emp.position.toLowerCase() === "lektor"
@@ -99,15 +99,13 @@ function getAllCourses() {
             allCourses.push(emp.courses);
         }
     });
-    // Fjern duplikater og sorter alfabetisk
+    
     let uniqueCourses = [...new Set(allCourses)].sort();
-    // Returner som HTML-liste
+    
     return `<ul>` + uniqueCourses.map(course => `<li>${course}</li>`).join("") + `</ul>`;
 }
 document.getElementById("allecourses").innerHTML = getAllCourses();
 
-
-// Funksjon som viser administrasjonen (rektor, dekaner, vaktmester)
 function renderAdministrasjon() {
     const administrasjon = employees.filter(emp => 
         emp.position.toLowerCase() === "rektor" || 
@@ -124,32 +122,35 @@ function renderAdministrasjon() {
 }
 
 function addEmployee(firstname, lastname, position, office, email, courses) {
-    let coursesValue;
+    
+    //#OPPD3
+    //Lagt til dett oppsettet for å hente ut verdier fra inputfeltet i HTML-skjemaet ved hjelp av document.getElementById().value
     const printFname = document.getElementById("firstname").value
     const printLname = document.getElementById("lastname").value
     const printEpost = document.getElementById("epost").value
     const printOffice = document.getElementById("office").value
     const printStilling = document.getElementById("role").value
-    // Hvis stillingen er Rektor, Dekan eller Vaktmester → ingen kursansvar
+
+     let coursesValue;
+   
     if (["Rektor", "Dekan", "Vaktmester"].includes(position)) {
         coursesValue = "ingen kursansvar";
     } else {
-        // Sørg for at kurs alltid lagres som array
+        
         coursesValue = Array.isArray(courses) ? courses : [courses];
     }
-    // Opprett nytt objekt med samme struktur som employees-arrayen
+   
     const newEmployee = {
-        firstname: printFname, //firstname,
-        lastname: printLname, //lastname,
-        position: printStilling, //position,
-        office: printOffice,//office,
-        email: printEpost, //email,
+        firstname: printFname, //#OPPD3 fra firstname,
+        lastname: printLname, //#OPPD3 fra lastname,
+        position: printStilling, //#OPPD3 fra position,
+        office: printOffice,//#OPPD3 fra office,
+        email: printEpost, //#OPPD3 fra email,
         courses: coursesValue
     };
-    // Legg til i registeret
+    
     employees.push(newEmployee);
-    // Bekreftelse i konsollen
-   // console.log(`${firstname} ${lastname} er lagt til som ${position}.`);
+  
    const index = employees.length-1
    userList.innerHTML += getEmployeeHTML(index)
 }
@@ -160,13 +161,11 @@ function deleteEmployee(index) {
         return;
     }
 
-    // Fjern ansatt fra arrayen
+    
     employees.splice(index, 1);
-
-    // Oppdater visningen
+   
     renderAllEmployees();
 
-    // Oppdater kurslisten også (hvis du vil at den skal oppdatere automatisk)
     document.getElementById("allecourses").innerHTML = getAllCourses();
 }
 
